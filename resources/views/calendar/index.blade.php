@@ -90,7 +90,8 @@
                                 'title' : response.title,
                                 'start' : response.start_date,
                                 'end'   : response.end_date,
-                            })
+                            });
+                            window.location.reload();
                         },
                         error: function(error)
                         {
@@ -106,7 +107,7 @@
                 var id          = event.id;
                 var start_date  = moment(event.start).format('YYYY-MM-DD');
                 var end_date    = moment(event.end).format('YYYY-MM-DD');
-
+                
                 $.ajax({
                         url:"{{ route('calendar.update', '') }}" + '/' + id,
                         type:"PATCH",
@@ -115,7 +116,7 @@
                         success: function(response)
                         {
                             Swal.fire({
-                                title: 'Event Updated!',
+                                title: 'Event Updated Successfully!',
                                 icon: 'success',
                                 iconColor: '#009000',
                                 timer: 3000,
@@ -144,7 +145,7 @@
                             $('#calendar').fullCalendar('removeEvents', response);
                             if(confirm('{{ Auth::user()->name }}, are you sure?')){
                                 Swal.fire({
-                                    title: 'Event Deleted!',
+                                    title: 'Event Deleted Successfully!',
                                     icon: 'success',
                                     iconColor: '#009000',
                                     timer: 3000,
@@ -161,10 +162,18 @@
                         },
                 });
 
-            }
+            },
+            //selectAllow: function(event)
+            //{
+              //  return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcfOffset(false), 'day');
+            //}
 
             
-        })
+        });
+
+        $('#bookingModal').on('hidden.bs.modal', function() {
+            $('#createEvent').unbind();
+        });
     });
 </script>
 
