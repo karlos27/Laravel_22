@@ -13,11 +13,21 @@ class CalendarController extends Controller
         $bookings = Booking::all();
         
         foreach($bookings as $booking) {
+            //$color = null;
+            //if($booking -> title == 'Test'){
+               //$color = '#A9190E';
+                
+            //}
+            //if($booking -> title == '22'){
+                //$color = '#81B227';
+                
+            //}
             $events[] = [
                 'id'    => $booking->id,
                 'title' => $booking->title,
                 'start' => $booking->start_date,
                 'end'   => $booking->end_date,
+                //'color' => $color,
             ];
         }
         //return $bookings;
@@ -38,7 +48,19 @@ class CalendarController extends Controller
             'end_date'      => $request->end_date,
         ]);
 
-        return response()->json($booking);
+        //$color = null;
+
+        //if($booking->title == 'Test'){
+            //$color = '#A9190E';
+        //}
+
+        return response()->json([
+            'id'    =>$booking->id,
+            'start' =>$booking->start_date,
+            'end'   =>$booking->end_date,
+            'title' =>$booking->title,
+            //'color' =>$color ? $color: '',
+        ]);
     }
 
     public function update(Request $request, $id)

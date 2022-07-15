@@ -19,11 +19,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="container">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-7">
                         <div id="calendar">
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                     </div>
                 </div>
             </div>
@@ -41,9 +41,17 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-            <!-- <label for="InputEvent">New Event</label> -->
-            <input type="text" class="form-control event" id="InputEvent" placeholder="Enter an event">
-            <span id="titleError" class="text-danger"></span>
+            <div class="row">
+                <div class="col-10">
+                    <!-- <label for="InputEvent">New Event</label> -->
+                    <input type="text" class="form-control event" id="InputEvent" placeholder="Enter an event">
+                    <span id="titleError" class="text-danger"></span>
+                </div>
+                <div class="col-2">
+                    <!-- <label for="exampleColorInput" class="form-label">Color picker</label> -->
+                    <input type="color" class="form-control form-control-color" id="ColorInput" value="#563d7c" title="Choose your color">
+                </div>
+            </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -70,6 +78,8 @@
             events: booking,
             selectable: true,
             selectHelper: true,
+            editable:true,
+            displayEventTime:false,
             select: function(start, end, allDays){
                 $('#bookingModal').modal('toggle');
 
@@ -88,8 +98,9 @@
                             $('#bookingModal').modal('hide');
                             $('#calendar').fullCalendar('renderEvent', {
                                 'title' : response.title,
-                                'start' : response.start_date,
-                                'end'   : response.end_date,
+                                'start' : response.start,
+                                'end'   : response.end,
+                                //'color' : response.color,
                             });
                             window.location.reload();
                         },
@@ -102,7 +113,6 @@
                     });
                 });
             },
-            editable:true,
             eventDrop: function(event) {
                 var id          = event.id;
                 var start_date  = moment(event.start).format('YYYY-MM-DD');
@@ -174,6 +184,8 @@
         $('#bookingModal').on('hidden.bs.modal', function() {
             $('#createEvent').unbind();
         });
+
+        //$('.fc-event-container').css('font-size', '14px');
     });
 </script>
 
